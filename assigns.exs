@@ -1,11 +1,14 @@
-# conteúdo do arquivo hello_liveview.exs
-
 Mix.install([
-  {:liveview_playground, "~> 0.1.1"}
+  {:liveview_playground, "~> 0.1.8"}
 ])
 
 defmodule PageLive do
   use LiveviewPlaygroundWeb, :live_view
+
+  def mount(_params, _session, socket) do
+    socket = assign(socket, name: 'Vandersondev')
+    {:ok, socket}
+  end
 
   def render(assigns) do
     ~H"""
@@ -17,11 +20,12 @@ defmodule PageLive do
           <title>Document</title>
         </head>
         <body>
-          <h1>Hello World!</h1>
+          <h1>Hello <%= @name %>!</h1>
         </body>
       </html>
     """
   end
+
 end
 
 LiveviewPlayground.start()
