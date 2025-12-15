@@ -6,7 +6,9 @@ defmodule PageLive do
   use LiveviewPlaygroundWeb, :live_view
 
   def mount(_params, _session, socket) do
+    socket.assigns |> dbg
     socket = assign(socket, name: 'Vandersondev')
+    socket.assigns |> dbg
     {:ok, socket}
   end
 
