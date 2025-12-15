@@ -1,15 +1,15 @@
+# conteúdo do arquivo hello_liveview.exs
+
 Mix.install([
-  {:liveview_playground, "~> 0.1.8"}
+  {:liveview_playground, "~> 0.1.1"}
 ])
 
 defmodule PageLive do
   use LiveviewPlaygroundWeb, :live_view
 
   def mount(_params, _session, socket) do
-    socket.assigns |> dbg
     socket = assign(socket, name: "Vandersondev")
-    socket = assign(socket, age: "36")
-    socket.assigns |> dbg
+    socket = assign(socket, age: ~c"36")
     {:ok, socket}
   end
 
@@ -25,6 +25,8 @@ defmodule PageLive do
         <body>
           <h1>Hello <%= @name %>!</h1>
           <p>You are <%= @age %></p>
+
+          <input type="button" value="Reverse" phx-click="reverse" >
         </body>
       </html>
     """
