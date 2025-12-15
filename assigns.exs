@@ -8,6 +8,7 @@ defmodule PageLive do
   def mount(_params, _session, socket) do
     socket.assigns |> dbg
     socket = assign(socket, name: 'Vandersondev')
+    socket = assign(socket, age: '36')
     socket.assigns |> dbg
     {:ok, socket}
   end
@@ -23,6 +24,7 @@ defmodule PageLive do
         </head>
         <body>
           <h1>Hello <%= @name %>!</h1>
+          <p>You are <%= @age %></p>
         </body>
       </html>
     """
