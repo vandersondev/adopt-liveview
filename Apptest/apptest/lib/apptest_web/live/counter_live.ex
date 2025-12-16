@@ -1,0 +1,80 @@
+defmodule ApptestWeb.CounterLive do
+  use ApptestWeb, :live_view
+
+  @impl true
+  def mount(_params, _session, socket) do
+    {:ok,
+     assign(socket,
+       count: 0,
+       name: ""
+     )}
+  end
+
+  @impl true
+  def render(assigns) do
+    ~H"""
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+          .wrap {
+            max-width: 420px;
+            margin: 40px auto;
+            font-family: system-ui;
+          }
+          .form-wrap {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin: 16px 0;
+          }
+          form {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+          }
+          .msg {
+            margin-top: 12px;
+          }
+        </style>
+        <h1>Counter LiveView</h1>
+        <div class="form-wrap">
+          <button phx-click="dec">-</button>
+          <p><%= @count %></p>
+          <button phx-click="inc">+</button>
+        </div>
+        <h2>Real time validation</h2>
+        <form phx-change="validate">
+          <input
+            type="text"
+            name="name"
+            id="name"
+            value={@name}
+            placeholder="Digite seu nome"
+            autocomplete="off"
+          />
+        </form>
+        <p class="msg">
+          Olá <%= if @name == "" do %>
+          <em>visitante</em>
+          <% else %>
+          <strong><%= @name %></strong>
+          <% end %> 👋
+        </p>
+    """
+  end
+
+  @impl true
+  def handle_event("inc", _params, socket) do
+    {:noreply, update(socket, :count, &(&1 + 1))}
+  end
+
+  def handle_event("dec", _params, socket) do
+    {:noreply, update(socket, :count, &(&1 - 1))}
+  end
+
+  def handle_event("validate", %{"name" => name}, socket) do
+    name = String.slice(name, 0, 30)
+    {:noreply, assign(socket, name: name)}
+  end
+end
