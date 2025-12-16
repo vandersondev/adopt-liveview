@@ -1,1 +1,0 @@
-live("/counter", CounterLive)
